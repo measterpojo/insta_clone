@@ -1,0 +1,33 @@
+  
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-12">
+	<div class="row">
+
+		<form method="POST" action="" enctype="multipart/form-data" role='form'>
+			{% csrf_token %}
+			<h3 class="">New Story</h3>
+
+			
+
+			{{ form.content }}
+			<hr>
+
+
+			<label>caption</label>
+			<br>
+			{{ form.caption }}
+
+			<button type="submit">Send</button>
+
+		</form>
+	</div>
+</div>
+
+
+
+{% endblock %}

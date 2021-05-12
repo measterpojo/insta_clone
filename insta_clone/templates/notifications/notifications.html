@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+{% for notification in notifications %}
+<div class="card" style="width: 100rem;">
+	  <ul class="list-group list-group-flush">
+
+		{% if notification.notification_type == 2 %}
+			<div class="row">
+			<div class="col-md-3">
+				<a href="{% url 'delete-notification' notification.id %}"></a>
+				<figure>
+					<p>
+					{% if notification.sender.profile.picture %}
+						<img width="75" src="{{ notification.sender.profile.picture.url }}">
+					{% else %}
+
+					{% endif%}
+					</p>
+				</figure>
+				
+			</div>
+			<div class="col-md-6">
+	
+		
+					&ensp;<h4>Commented</h4>
+					<p>{{ notification.text_preview }}</p>
+			</div>
+			<div class="col-md-3">
+				<div class="">
+					<div class="row">
+						<strong>{{ notification.sender.profile.first_name }}{{ notification.sender.profile.last_name }}</strong>
+					</div>
+					<p><small>@{{ notification.sender.profile.user.username }}</small></p>
+					<strong><small>{{ notification.date|naturaltime }}</small></strong>
+				</div>
+			</div>
+
+		</div>
+		{% endif %}
+
+
+		{% if notification.notification_type == 3 %}
+		<div class="row">
+			<div class="col-md-3">
+				<a href="{% url 'delete-notification' notification.id %}"></a>
+				<figure>
+					<p>
+					{% if notification.sender.profile.picture %}
+						<img width="75" src="{{ notification.sender.profile.picture.url }}">
+					{% else %}
+
+					{% endif%}
+					</p>
+				</figure>
+				
+			</div>
+			<div class="col-md-6">
+	
+		
+					&ensp;<h3>{{ notification.sender.username }} -  Started following you!!</h3>
+			</div>
+			<div class="col-md-3">
+				<div class="">
+					<div class="row">
+
+						
+					</div>
+					<p><small>@{{ notification.sender.profile.user.username }}</small></p>
+					<strong><small>{{ notification.date|naturaltime }}</small></strong>
+				</div>
+			</div>
+
+		</div>
+			
+		{% endif %}
+
+
+
+		{% if notification.notification_type == 1 %}
+		<div class="row">
+			<div class="col-md-3">
+				<a href="{% url 'delete-notification' notification.id %}"></a>
+				<figure>
+					<p>
+					{% if notification.sender.profile.picture %}
+						<img width="75" src="{{ notification.sender.profile.picture.url }}">
+					{% else %}
+
+					{% endif%}
+					</p>
+				</figure>
+				
+			</div>
+			<div class="col-md-6">
+	
+		
+					&ensp;<h3>Liked your post</h3>
+			</div>
+			<div class="col-md-2">
+				<div class="">
+					<div class="row">
+						<strong>{{ notification.sender.profile.first_name }}{{ notification.sender.profile.last_name }}</strong>
+					</div>
+					<p><small>@{{ notification.sender.profile.user.username }}</small></p>
+					<strong><small>{{ notification.date|naturaltime }}</small></strong>
+				</div>
+			</div>
+			<div class="col-md-1">
+				<br>
+					<a href="{% url 'delete-notification' notification.id %}"><button class="btn btn-outline-danger">x</button></a>
+			</div>
+
+		</div>
+		{% endif %}
+
+	</ul>
+</div>
+{% endfor %}
+
+
+{% endblock %}
+
+
+<a href="{% url 'delete-notification' notification.id %}"></a>

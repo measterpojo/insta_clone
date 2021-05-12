@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+
+	
+	<div class="card" style="width: 100%;">
+		<ul class="list-group list-group-flush">
+		  	
+			{% for user in users %}
+				<div class="row">
+
+				<div class="col-lg-3">
+
+						{% if user.profile.picture %}
+							<img width="50" class="rounded-circle" src="{{ user.profile.picture.url }}" alt="Placeholder image">
+								{% else %}
+							<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+						{% endif %}
+							
+				</div> 
+
+				<div class="col-lg-6">
+						<p>
+							<strong> {{ user.profile.first_name }}{{ user.profile.last_name}}</strong>
+							<a href=""></a>
+						</p>
+				</div> 
+
+
+				<div class="col-lg-3">
+					<a href="{% url 'newconversation' user.username %}">Send a message!</a>
+				</div> 
+			</div>
+			{% endfor %}
+			
+		</ul>
+	</div>
+
+</div>
+
+
+
+
+{% endblock %}
+
+

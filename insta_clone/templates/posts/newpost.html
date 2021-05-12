@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<div class="col-lg-1">
+	
+
+</div>
+
+<div class="col-lg-10">
+	<div class="row">
+		<div class="col-lg-12">
+			<form method="POST" action="" enctype="multipart/form-data" role='form'>
+				{% csrf_token %}
+
+				<div class="card">
+		  			<div class="card-header">
+		    			New Post
+		  			</div>
+				  	
+		  			<div class="form-group">
+	    				<strong>Content:</strong><br>
+	    				{{ form.content }}    				
+	  				</div>
+	  				<div class="form-group">
+	    				<label for="exampleInputEmail1">caption</label>
+	    				{{ form.caption }}
+	  				</div>
+	  				<div class="form-group">
+	    				<label for="exampleInputEmail1">tags</label>
+	    				{{ form.tags }}
+	  				</div>
+				
+				<br>
+				<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-lg-1">
+	
+
+</div>
+
+
+{% endblock %}

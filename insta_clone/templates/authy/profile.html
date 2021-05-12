@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div class="col-lg-4">
+	<div class="" style="width: 18rem;">
+	<figure class="image is-256x256">
+        {% if profile.picture %}	
+          <img class="rounded-circle"  src="{{ profile.picture.url }}">
+        {% else %}
+          <img class="rounded-circle" src="https://bulma.io/images/placeholders/256x256.png">
+        {% endif %}
+    </figure>
+	</div>
+</div>		
+		
+<div class="col-md-8">   
+	  <div class="card-body">
+	  	<div class="row"> 
+	    	<h5 class="card-title">@{{ profile.user }}</h5>&ensp;&ensp;
+	    	{% if user.is_authenticated and user == profile.user %}
+	    	<a href="{% url 'edit-profile' %}" class="btn-space btn btn-outline-secondary btn-sm">edit profile</a>
+	    	{% else %}
+	    		{% if follow_status == True %}
+	    			<a href="{% url 'follow' profile.user 0 %}">Unfollow</a>
+	    		{% else %}
+	    			<a href="{% url 'follow' profile.user 1 %}">Follow</a>
+	    		{% endif %}
+	    	{% endif %}
+		</div>
+		<br>
+		<div class="row">
+			<strong>10</strong><p>posts:</p>&ensp;
+			<strong>10</strong><p>followers</p>&ensp;
+			<strong>10</strong><p>following</p>&ensp;
+		</div>
+		<br>
+		{% if pofile.first_name %}
+		<strong>{{ profile.first_name }}&ensp;{{ profile.last_name }}</strong><br>
+
+		{{ profile.profile_info}}
+		{% endif %}
+	    <p class="card-text"></p>
+	    
+	  </div>
+
+</div>	
+
+
+
+
+<div class="col-md-12">
+	<br><hr><br>
+	<div class="row">
+		{% for post in posts %}
+		<div class="col-lg-4">
+			<div class="card" style="width: 18rem;">
+				<a href="{{ post.get_absolute_url }}">
+	  				<img class="card-img-top" src="{{ post.content.first.file.url }}" alt="Card image cap">
+				</a>
+			</div>
+		</div>	
+		{% endfor %}
+	</div>
+</div>
+
+<br>
+
+
+
+
+
+ 
+
+
+
+
+
+{% endblock %}
+
+
+<!-- {% include 'authy/post_detail.html' %}-->

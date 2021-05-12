@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="col-lg-4">
+
+	<h4><center>Inbox</center></h4>
+	<ul style="overflow-y: scroll; height: 500px">
+
+		{% for message in messages %}
+
+		<a class="{% if active_direct == message.user.username %}is-active{% endif %}" href="{% url 'directs' message.user.username %}">
+		<div class="card">
+  			<div class="card-body">
+    			{% if message.user.profile.picture %}
+            		<img width="75" class="rounded-circle" src="{{ message.user.profile.picture.url }}" alt="Placeholder image">
+         		{% else %}
+            		<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          		{% endif %}
+  			</div>
+  			<div>
+  				<p>
+          		<strong>{{ message.user.profile.first_name }} {{ message.user.profile.last_name }}</strong> <small>@{{ message.user.username }}</small>
+        		</p>	
+  			</div>
+  			  	<div class="content">
+        		{% if message.unread %}
+        			<p style="font-weight: bold; color: red;">
+          			<i class="material-icons">mark_chat_unread</i> {{ message.unread }}
+        			</p>
+        		{% endif %}        
+      			</div>
+			</div>
+		</a>
+		{% endfor %}
+		
+	</ul>
+	<br>
+
+</div>
+
+
+<div class="col-lg-8">
+	<div style="overflow-y: scroll; height: 500px">
+
+	{% for direct in directs %}
+			{% if direct.sender.username == user.username %}
+			<div style="text-align: right; padding-right: 5%;"><p>{{ direct.body }}</p>
+			<small>{{ direct.date|date:'N d G:i'}}</small></div>
+			{% else %}
+			<p>{{ direct.body }}</p>
+			<small>{{ direct.date|date:'N d G:i'}}</small>
+			{% endif %}
+	{% endfor %}
+
+	</div>
+	<form role='form' id="msgForm" method="POST" action="{% url 'send_direct' %}">
+		{% csrf_token %}
+		<input type="hidden" name="to_user" value="{{ active_direct }}">
+	
+		<input  id="myInput" class="col-lg-9" name="body" placeholder="message..." required></input>
+		<button type="submit" id="myBtn" class="btn btn-success" style="display: none;">Send</button>
+	</form>
+
+
+
+<div class="col-lg-3">
+	
+</div>
+
+<script type="text/javascript">
+
+
+var input = document.getElementById("myInput");
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("myBtn").click();
+  }
+});
+
+</script>
+
+{% endblock %}
+
+
+
+<!--     <form id="senddirectform" method="POST" action="{% url 'send-direct' %}">
+                {% csrf_token %}
+                <div class="input-field col s9">
+                    <input type="hidden" name="to_user" value="{{ active_direct }}">
+                    <input id="text" name="body" type="text" class="validate">
+                    <label for="text">Type your message</label>
+                  </div>
+                  <div class="input-field col s9">
+                  <button class="btn waves-effect waves-light" type="submit" name="action">Send
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+            </form> -->
